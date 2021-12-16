@@ -19,3 +19,14 @@ Route::get('/', '\App\Http\Controllers\FormController@getForm');
 Route::get('/getUsers', 'App\Http\Controllers\FormController@getUsersAjax');
 Route::post('/notation', 'App\Http\Controllers\NotationController@getForm');
 Route::post('/confirmNote', 'App\Http\Controllers\NotationController@applyNotes');
+
+// Route export by Fan
+Route::get('/export', function () {
+    return view('export');
+})->name('export'); // page export
+Route::get('/export/equipe', '\App\Http\Controllers\ExportController@exportDatabase_equipe')->name('export_equipe'); // table equipe
+Route::get('/export/note', '\App\Http\Controllers\ExportController@exportDatabase_note')->name('export_note'); // table note
+Route::get('/export/utilisateur', '\App\Http\Controllers\ExportController@exportDatabase_utilisateur')->name('export_utilisateur'); // table utilisateur
+
+// Route dashboard by Fan
+Route::get('/dashboard', 'App\Http\Controllers\DashboardController@showDashboard')->name('showDashboard'); // page dashboard
