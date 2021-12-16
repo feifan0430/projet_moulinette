@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use function PHPSTORM_META\type;
+
+class UploadController extends Controller
+{
+    public function showUploadPage() {
+        return view('upload');
+    }
+
+    public function read_csv() {
+        $file = $_FILES['excel_path'];
+        $file_name = $file['tmp_name'];
+
+        if($file_name == '') {
+            die("Please choose a document. ");
+        }
+
+        $handle = fopen($file_name, 'r');
+        if($handle === FALSE) die("Open Error");
+
+        $csv_val = array('ID', 'NOM');
+        $csv_arr = array();
+
+        $data = fgetcsv($handle);
+        $data[0] = substr($data[0], 3);
+        $tmp_row = array();
+        foreach ($csv_val as $k => $v) {
+            $tmp_row[$v] = trim(iconv('utf-8', 'utf-8', ltrim($data[$k], '`')));
+        }
+        // dd($tmp_row);
+        $legal_input = 'true';
+        foreach ($tmp_row as $key => $value) {
+            if(strcmp($key, $value) != 0) {
+                $legal_input = 'false';
+            }
+            echo (strcmp($key, $value)) . "<br>";
+            echo ($key) . "<br>";
+            echo "key: " . $key . " value: " . $value . "<br>";
+        }
+        echo $legal_input;
+
+        // while(($data = fgetcsv($handle)) !== FALSE)
+        // {
+        //     // TODO::这里需要检查和给的字段数是否一致，如果不一致，则不能写入
+        //     $tmp_row = array();
+        //     foreach ($csv_val as $k => $v) {
+        //         $tmp_row[$v] = trim(iconv('gbk','utf-8', ltrim($data[$k], '`')));
+        //     }
+        //     $csv_arr[] = $tmp_row;
+        // }
+
+        // fclose($handle);
+        // // dd($csv_arr);
+        // foreach ($csv_arr as $key => $array) {
+        //     DB::table('equipe')->insert([
+        //         'ID' => $array['ID'],
+        //         'NOM' => $array['NOM']
+        //     ]);
+        // }
+    }
+
+    
+}

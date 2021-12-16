@@ -30,3 +30,7 @@ Route::get('/export/utilisateur', '\App\Http\Controllers\ExportController@export
 
 // Route dashboard by Fan
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@showDashboard')->name('showDashboard'); // page dashboard
+
+// Route upload by Fan
+Route::get('/upload', 'App\Http\Controllers\UploadController@showUploadPage')->name('showUploadPage');
+Route::post('/upload/read_csv', 'App\Http\Controllers\UploadController@read_csv')->name('read_csv');
