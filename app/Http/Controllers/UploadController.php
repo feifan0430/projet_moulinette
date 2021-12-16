@@ -27,6 +27,7 @@ class UploadController extends Controller
         $csv_val = array('ID', 'NOM');
         $csv_arr = array();
 
+        // remove DOM
         $data = fgetcsv($handle);
         $data[0] = substr($data[0], 3);
         $tmp_row = array();
@@ -43,26 +44,28 @@ class UploadController extends Controller
             echo ($key) . "<br>";
             echo "key: " . $key . " value: " . $value . "<br>";
         }
-        echo $legal_input;
+        // echo $legal_input;
 
-        // while(($data = fgetcsv($handle)) !== FALSE)
-        // {
-        //     // TODO::这里需要检查和给的字段数是否一致，如果不一致，则不能写入
-        //     $tmp_row = array();
-        //     foreach ($csv_val as $k => $v) {
-        //         $tmp_row[$v] = trim(iconv('gbk','utf-8', ltrim($data[$k], '`')));
-        //     }
-        //     $csv_arr[] = $tmp_row;
-        // }
-
-        // fclose($handle);
-        // // dd($csv_arr);
-        // foreach ($csv_arr as $key => $array) {
-        //     DB::table('equipe')->insert([
-        //         'ID' => $array['ID'],
-        //         'NOM' => $array['NOM']
-        //     ]);
-        // }
+        if($legal_input == 'true') {
+            while(($data = fgetcsv($handle)) !== FALSE) {
+                $tmp_row = array();
+                foreach ($csv_val as $k => $v) {
+                    $tmp_row[$v] = trim(iconv('gbk','utf-8', ltrim($data[$k], '`')));
+                }
+                $csv_arr[] = $tmp_row;
+            }
+    
+            fclose($handle);
+            // dd($csv_arr);
+            foreach ($csv_arr as $key => $array) {
+                DB::table('equipe')->insert([
+                    'ID' => $array['ID'],
+                    'NOM' => $array['NOM']
+                ]);
+            }
+        } else {
+            echo "error";
+        }
     }
 
     
