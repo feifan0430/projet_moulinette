@@ -34,3 +34,8 @@ Route::get('/dashboard', 'App\Http\Controllers\DashboardController@showDashboard
 // Route upload by Fan
 Route::get('/upload', 'App\Http\Controllers\UploadController@showUploadPage')->name('showUploadPage');
 Route::post('/upload/read_csv', 'App\Http\Controllers\UploadController@read_csv')->name('read_csv');
+
+// Route index by Fan
+Route::get('/index', function() {
+    return view('index');
+})->name('index');
