@@ -66,7 +66,7 @@ class ExportController extends Controller
     }
 
     // table utilisateur
-    public function exportDatabase_utilisateur() {
+    public function exportDatabase_users() {
         // $strFileName = 'utilisateur.csv';
         ob_clean();
         $fp = fopen('php://output', 'a');
@@ -78,15 +78,15 @@ class ExportController extends Controller
         header('Content-type: text/csv; charset=UTF-8');
         header('Content-Disposition: attachment; filename=utilisateur.csv');
         print(chr(0xEF).chr(0xBB).chr(0xBF));
-        fputcsv($fp, ['ID', 'ID_EQUIPE', 'NOM', 'PRENOM', 'MAIL'], ",");
-        $result = DB::select("select * from utilisateur");
+        fputcsv($fp, ['id', 'nom', 'prenom', 'email', 'id_equipe'], ",");
+        $result = DB::select("select * from users");
         foreach ($result as $key => $value) {
-            $id = $value->ID; 
-            $id_equipe = $value->ID_EQUIPE;
-            $nom = $value->NOM;
-            $prenom = $value->PRENOM;
-            $mail = $value->MAIL;
-            $str = $id . "," . $id_equipe . "," . $nom . "," . $prenom . "," . $mail;
+            $id = $value->id; 
+            $id_equipe = $value->id_equipe;
+            $nom = $value->nom;
+            $prenom = $value->prenom;
+            $email = $value->email;
+            $str = $id . "," . $nom . "," . $prenom . "," . $email . "," . $id_equipe;
             $str = explode(',', $str);
             fputcsv($fp, $str, ",");
         }

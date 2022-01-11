@@ -14,11 +14,9 @@ use App\Http\Controllers\NotationController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', '\App\Http\Controllers\FormController@getForm');
-Route::get('/getUsers', 'App\Http\Controllers\FormController@getUsersAjax');
-Route::post('/notation', 'App\Http\Controllers\NotationController@getForm');
-Route::post('/confirmNote', 'App\Http\Controllers\NotationController@applyNotes');
+Route::get('/', function() {
+    return view('index');
+});
 
 // Route export by Fan
 Route::get('/export', function () {
@@ -26,7 +24,7 @@ Route::get('/export', function () {
 })->name('export'); // page export
 Route::get('/export/equipe', '\App\Http\Controllers\ExportController@exportDatabase_equipe')->name('export_equipe'); // table equipe
 Route::get('/export/note', '\App\Http\Controllers\ExportController@exportDatabase_note')->name('export_note'); // table note
-Route::get('/export/utilisateur', '\App\Http\Controllers\ExportController@exportDatabase_utilisateur')->name('export_utilisateur'); // table utilisateur
+Route::get('/export/utilisateur', '\App\Http\Controllers\ExportController@exportDatabase_users')->name('export_users'); // table utilisateur
 
 // Route dashboard by Fan
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@showDashboard')->name('showDashboard'); // page dashboard
@@ -39,3 +37,7 @@ Route::post('/upload/read_csv', 'App\Http\Controllers\UploadController@read_csv'
 Route::get('/index', function() {
     return view('index');
 })->name('index');
+
+// Route notation
+Route::get('/notation', 'App\Http\Controllers\NotationController@showNotationPage')->name('showNotationPage');
+Route::post('/updateNotation', 'App\Http\Controllers\NotationController@updateNotation')->name('updateNotation');

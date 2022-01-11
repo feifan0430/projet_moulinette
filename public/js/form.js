@@ -30,7 +30,8 @@ function fillSelectUser(userList){
     var selectUser = $("#selectUser");
     selectUser.empty().append('<option value="" selected>────────────────────────────</option>');
     userList.forEach(function(user){
-        selectUser.append('<option value="' + user['ID'] + '">'+user['PRENOM'] +' '+user['NOM'] + '</option>');
+        // selectUser.append('<option value="' + user['ID'] + '">'+user['PRENOM'] +' '+user['NOM'] + '</option>');
+        selectUser.append('<option value="' + user['id'] + '">'+user['prenom'] +' '+user['nom'] + '</option>');
     });
     $("#user").show();
 }

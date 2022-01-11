@@ -24,12 +24,12 @@ class UploadController extends Controller
         $handle = fopen($file_name, 'r');
         if($handle === FALSE) die("Open Error");
 
-        $csv_val = array('ID', 'NOM');
+        $csv_val = array('nom', 'prenom', 'email', 'id_equipe');
         $csv_arr = array();
 
         // remove DOM
         $data = fgetcsv($handle);
-        $data[0] = substr($data[0], 3);
+        // $data[0] = substr($data[0], 3);
         $tmp_row = array();
         foreach ($csv_val as $k => $v) {
             $tmp_row[$v] = trim(iconv('utf-8', 'utf-8', ltrim($data[$k], '`')));
@@ -58,9 +58,14 @@ class UploadController extends Controller
             fclose($handle);
             // dd($csv_arr);
             foreach ($csv_arr as $key => $array) {
-                DB::table('equipe')->insert([
-                    'ID' => $array['ID'],
-                    'NOM' => $array['NOM']
+                DB::table('users')->insert([
+                    // 'ID' => $array['ID'],
+                    // 'NOM' => $array['NOM']
+                    'id_equipe' => $array['id_equipe'],
+                    'nom' => $array['nom'],
+                    'prenom' => $array['prenom'],
+                    'email' => $array['email'],
+                    'password' => bcrypt($array['nom'])
                 ]);
             }
         } else {

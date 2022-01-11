@@ -8,36 +8,29 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public function showDashboard() {
-        $num_utilisateur = DB::table('utilisateur')->count('ID');
-        $read_table_utilisateur = DB::select('select * from utilisateur');
+        $num_users = DB::table('users')->count('email');
+        $read_table_users = DB::select('select * from users');
         $num_note = DB::table('note')->count('ID_NOTANT');
         $read_table_note = DB::select('select * from note');
         $num_equipe = DB::table('equipe')->count('ID');
         $read_table_equipe = DB::select('select * from equipe');
 
-        for($i = 0; $i < $num_utilisateur; $i++){
-            $num_vote = DB::table('note')->where('ID_NOTE', $read_table_utilisateur[$i]->ID)
-                                         ->count('ID_NOTANT');
-            $num_membre_equipe = DB::table('utilisateur')->where('ID_EQUIPE', $read_table_utilisateur[$i]->ID_EQUIPE)
-                                                         ->count('ID');
+        for($i = 0; $i < $num_users; $i++){
+            $num_vote = DB::table('note')->where('ID_NOTANT', $read_table_users[$i]->id)
+                                         ->count('ID_NOTE');
+            $num_membre_equipe = DB::table('users')->where('id_equipe', $read_table_users[$i]->id_equipe)
+                                                   ->count('id');
             if($num_vote == $num_membre_equipe - 1) {
-                DB::table('utilisateur')->where('ID', $read_table_utilisateur[$i]->ID)
-                                        ->update(['HAS_VOTED' => 'true']);
+                DB::table('users')->where('id', $read_table_users[$i]->id)
+                                  ->update(['has_voted' => 'true']);
             }else{
-                DB::table('utilisateur')->where('ID', $read_table_utilisateur[$i]->ID)
-                                        ->update(['HAS_VOTED' => 'false']);
+                DB::table('users')->where('id', $read_table_users[$i]->id)
+                                  ->update(['has_voted' => 'false']);
             }
         }
 
-        $num_utilisateur = DB::table('utilisateur')->count('ID');
-        $read_table_utilisateur = DB::select('select * from utilisateur');
-        $num_note = DB::table('note')->count('ID_NOTANT');
-        $read_table_note = DB::select('select * from note');
-        $num_equipe = DB::table('equipe')->count('ID');
-        $read_table_equipe = DB::select('select * from equipe');
-
-        return view('dashboard')->with('num_utilisateur', $num_utilisateur)
-                                ->with('read_table_utilisateur', $read_table_utilisateur)
+        return view('dashboard')->with('num_users', $num_users)
+                                ->with('read_table_users', $read_table_users)
                                 ->with('num_note', $num_note)
                                 ->with('read_table_note', $read_table_note)
                                 ->with('num_equipe', $num_equipe)

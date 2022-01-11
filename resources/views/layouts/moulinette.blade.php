@@ -17,7 +17,7 @@
     <title>Moulinette</title>
 </head>
 <body>
-    <div class="container-fluid" style="margin-bottom: 0%;">
+    <div class="container-fluid" style="margin-bottom: 2%;">
         <div class="row">
             <header class="p-3 bg-dark text-white">
                 <div class="container">
@@ -29,7 +29,12 @@
                                 </a>
                             </li>
                             @if (Route::has('login'))
-                            @auth    
+                            @auth
+                            <li>
+                                <a href="{{ route('showNotationPage') }}" class="nav-link px-2 text-white">
+                                    Notation
+                                </a>
+                            </li>    
                             <li>
                                 <a href="{{ route('showUploadPage') }}" class="nav-link px-2 text-white">
                                     Upload
@@ -53,7 +58,7 @@
                             @auth
                             <div class="dropdown text-end">
                                 <a href="#" class="d-block px-2 text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Bonjour, {{ Auth::user()->name }} 
+                                    Bonjour, {{ Auth::user()->prenom }} 
                                 </a>
                                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                                     <li>
@@ -110,6 +115,7 @@
 
     <!-- FOOTER -->
     <div class="container">
+        <hr class="featurette-divider">
         <footer>
             <p class="pull-right"><a href="#">Back to top</a></p>
             <p>&copy; 2021 IMT Nord Europe, UV CDAW, Fan FEI &middot; <a href="#">Contactez moi</a> &middot; <a href="">Moulinette</a></p>
