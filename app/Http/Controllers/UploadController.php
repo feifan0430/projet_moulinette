@@ -71,6 +71,7 @@ class UploadController extends Controller
         } else {
             echo "error";
         }
+        return redirect(route('showUploadPage'));
     }
 
     

@@ -113,15 +113,84 @@
             </div>
         </div>
     @endforeach
-    <button type="submit" class="btn-outline" onclick="return checkRadio()">Envoyer</button>
+    <button type="submit" class="btn-outline" onclick="return checkRadio({{$list_teammate}})">Envoyer</button>
 </form>
 </div>
 
 <script>
-    function checkRadio() {
-        var groups=document.getElementById('notationForm'). getElementsByTagName('div') ; 
-        alert('Veuillez compléter toutes les options');
-        return false;
+    function checkRadio(list_teammate) {
+        var storage_is_allowed = true;
+        list_teammate.forEach(element => {
+            var elementName = 'participation_' + element.id;
+            var groups = document.getElementsByName(elementName);
+            var isChecked = false;
+            for (let index = 0; index < groups.length; index++) {
+                const element = groups[index];
+                if (element.checked == true) {
+                    isChecked = true;
+                    break;
+                }
+            }
+            if (isChecked == false) {
+                // alert('Veuillez compléter toutes les options');
+                storage_is_allowed = false;
+                return false;
+            }
+
+            var elementName = 'engagement_' + element.id;
+            var groups = document.getElementsByName(elementName);
+            var isChecked = false;
+            for (let index = 0; index < groups.length; index++) {
+                const element = groups[index];
+                if (element.checked == true) {
+                    isChecked = true;
+                    break;
+                }
+            }
+            if (isChecked == false) {
+                // alert('Veuillez compléter toutes les options');
+                storage_is_allowed = false;
+                return false;
+            }
+
+            var elementName = 'travail_en_equipe_' + element.id;
+            var groups = document.getElementsByName(elementName);
+            var isChecked = false;
+            for (let index = 0; index < groups.length; index++) {
+                const element = groups[index];
+                if (element.checked == true) {
+                    isChecked = true;
+                    break;
+                }
+            }
+            if (isChecked == false) {
+                // alert('Veuillez compléter toutes les options');
+                storage_is_allowed = false;
+                return false;
+            }
+
+            var elementName = 'expertise_' + element.id;
+            var groups = document.getElementsByName(elementName);
+            var isChecked = false;
+            for (let index = 0; index < groups.length; index++) {
+                const element = groups[index];
+                if (element.checked == true) {
+                    isChecked = true;
+                    break;
+                }
+            }
+            if (isChecked == false) {
+                // alert('Veuillez compléter toutes les options');
+                storage_is_allowed = false;
+                return false;
+            }
+        });
+        if (storage_is_allowed == false) {
+            alert('Veuillez compléter toutes les options');
+            return false;
+        }else {
+            return true;
+        }
     }
 </script>
 @endsection

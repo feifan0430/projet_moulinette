@@ -47,6 +47,6 @@ class NotationController extends Controller
             );
         }
 
-        return route('showNotationPage');
+        return redirect(route('showNotationPage'));
     }
 }

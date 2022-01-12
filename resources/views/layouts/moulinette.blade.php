@@ -30,11 +30,14 @@
                             </li>
                             @if (Route::has('login'))
                             @auth
+                            @if (Auth::user()->id_equipe != 0)
                             <li>
                                 <a href="{{ route('showNotationPage') }}" class="nav-link px-2 text-white">
                                     Notation
                                 </a>
-                            </li>    
+                            </li> 
+                            @endif   
+                            @if (Auth::user()->id_equipe == 0)
                             <li>
                                 <a href="{{ route('showUploadPage') }}" class="nav-link px-2 text-white">
                                     Upload
@@ -45,6 +48,7 @@
                                     Dashboard
                                 </a>
                             </li>
+                            @endif
                             @endauth
                             @endif
                         </ul>
@@ -62,18 +66,8 @@
                                 </a>
                                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                                     <li>
-                                        <a class="dropdown-item" href="#">
-                                            Vote
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            Upload
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="#">
-                                            Dashboard
+                                        <a class="dropdown-item" href={{ route('showUpdatePasswordPage') }}>
+                                            Reset Password
                                         </a>
                                     </li>
                                     <li>
@@ -96,11 +90,11 @@
                                         Login
                                     </a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a class="nav-link px-2 text-white" href="{{ route('register') }}">
                                         Register
                                     </a>
-                                </li>
+                                </li> --}}
                             </ul>
                             @endauth
                             @endif

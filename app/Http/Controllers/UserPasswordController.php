@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
+class UserPasswordController extends Controller
+{
+    public function showUpdatePasswordPage () {
+        return view('updatePassword')->with('toShow', 'UpdateForm');
+    }
+
+    public function updatePassword (Request $request) {
+        // echo $request->input('oldPassword') . '</br>';
+        // echo $request->input('newPassword') . '</br>';
+        // echo $request->input('confirmNewPassword') . '</br>';
+
+        $read_table_users = DB::table('users')->where('email', Auth::user()->email)
+                                              ->get('password');
+        $password = $read_table_users[0]->password;
+
+        if (Hash::check($request->input('oldPassword'), $password)) {
+            // echo "Right old Password </br>";
+        }else {
+            // echo "Wrong old Password </br>";
+            return view('updatePassword')->with('toShow', 'WrongOldPassword');
+        }
+
+        if (Hash::check($request->input('newPassword'), bcrypt($request->input('confirmNewPassword')))) {
+            // echo "Right new Password </br>";
+        }else {
+            // echo "Wrong new Password </br>";
+            return view('updatePassword')->with('toShow', 'WrongConfirmPassword');
+        }
+
+        if (Hash::check($request->input('oldPassword'), bcrypt($request->input('newPassword')))) {
+            // echo "Same Password </br>";
+            return view('updatePassword')->with('toShow', 'SameNewPassword');
+        }else {
+            // echo "Different Password </br>";
+        }
+        
+        return view('updatePassword')->with('toShow', 'SuccessfullyUpdated');
+    }
+}

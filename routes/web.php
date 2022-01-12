@@ -41,3 +41,7 @@ Route::get('/index', function() {
 // Route notation
 Route::get('/notation', 'App\Http\Controllers\NotationController@showNotationPage')->name('showNotationPage');
 Route::post('/updateNotation', 'App\Http\Controllers\NotationController@updateNotation')->name('updateNotation');
+
+// Route reset password
+Route::get('/reset_password_page', 'App\Http\Controllers\UserPasswordController@showUpdatePasswordPage')->name('showUpdatePasswordPage');
+Route::post('/reset_password', 'App\Http\Controllers\UserPasswordController@updatePassword')->name('updatePassword');

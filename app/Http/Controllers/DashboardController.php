@@ -8,8 +8,9 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public function showDashboard() {
-        $num_users = DB::table('users')->count('email');
-        $read_table_users = DB::select('select * from users');
+        $num_users = DB::table('users')->where('email', '!=', 'admin@imt-nord-europe.fr')->count('email');
+        $read_table_users = DB::table('users')->where('email', '!=', 'admin@imt-nord-europe.fr')->get();
+        // dd($read_table_users);
         $num_note = DB::table('note')->count('ID_NOTANT');
         $read_table_note = DB::select('select * from note');
         $num_equipe = DB::table('equipe')->count('ID');
