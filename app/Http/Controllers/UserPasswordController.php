@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
 
 class UserPasswordController extends Controller
 {
@@ -14,9 +15,6 @@ class UserPasswordController extends Controller
     }
 
     public function updatePassword (Request $request) {
-        // echo $request->input('oldPassword') . '</br>';
-        // echo $request->input('newPassword') . '</br>';
-        // echo $request->input('confirmNewPassword') . '</br>';
 
         $read_table_users = DB::table('users')->where('email', Auth::user()->email)
                                               ->get('password');
@@ -43,6 +41,23 @@ class UserPasswordController extends Controller
             // echo "Different Password </br>";
         }
         
+        DB::table('users')->where('email', Auth::user()->email)
+                          ->update([
+                              'password' => bcrypt($request->input('newPassword')),
+                          ]);
         return view('updatePassword')->with('toShow', 'SuccessfullyUpdated');
+    }
+
+    public function test () {
+        // DB::table('users')->where('email', 'admin@imt-nord-europe.fr')
+        //                   ->update([
+        //                       'password' => bcrypt('admin'),
+        //                   ]);
+
+        $word = "good";
+        $test = Crypt::encryptString($word);
+        echo $test . "</br>";
+        $test = Crypt::decryptString($test);
+        echo $test . "</br>";
     }
 }

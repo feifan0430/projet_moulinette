@@ -47,16 +47,20 @@ class ExportController extends Controller
         header('Content-type: text/csv; charset=UTF-8');
         header('Content-Disposition: attachment; filename=note.csv');
         print(chr(0xEF).chr(0xBB).chr(0xBF));
-        fputcsv($fp, ['ID_NOTANT', 'ID_NOTE', 'PARTICIPATION', 'ENGAGEMENT', 'TRAVAIL_EN_EQUIPE', 'EXPERTISE'], ",");
-        $result = DB::select("select * from note");
-        foreach ($result as $key => $value) {
-            $id_notant = $value->ID_NOTANT; 
+        fputcsv($fp, ['ID', 'NOM', 'PRENOM', 'ID_EQUIPE', 'PARTICIPATION', 'ENGAGEMENT', 'TRAVAIL_EN_EQUIPE', 'EXPERTISE', 'SUM'], ",");
+        // $result = DB::select("select * from note");
+        $result = DB::table('note_final')->join('users', 'users.id', 'note_final.ID_NOTE')->get();
+        foreach ($result as $key => $value) { 
             $id_note = $value->ID_NOTE;
+            $nom = $value->nom;
+            $prenom = $value->prenom;
+            $id_equipe = $value->id_equipe;
             $participation = $value->PARTICIPATION;
             $engagement = $value->ENGAGEMENT;
             $travail_en_equipe = $value->TRAVAIL_EN_EQUIPE;
             $expertise = $value->EXPERTISE;
-            $str = $id_notant . "," . $id_note . "," . $participation . "," . $engagement . "," . $travail_en_equipe . "," . $expertise;
+            $sum = $value->SUM;
+            $str = $id_note . "," . $nom . "," . $prenom . "," . $id_equipe . "," . $participation . "," . $engagement . "," . $travail_en_equipe . "," . $expertise . "," . $sum;
             $str = explode(',', $str);
             fputcsv($fp, $str, ",");
         }

@@ -13,12 +13,12 @@ class NotationController extends Controller
                                            ->where('id', '!=', Auth::user()->id)
                                            ->get();
         $num_teammate = DB::table('users')->where('id_equipe', Auth::user()->id_equipe)
-                                           ->where('id', '!=', Auth::user()->id)
-                                           ->count('id');
+                                          ->where('id', '!=', Auth::user()->id)
+                                          ->count('id');
         $list_notation = DB::table('note')->where('ID_NOTANT', Auth::user()->id)
                                           ->get();
         $num_notation = DB::table('note')->where('ID_NOTANT', Auth::user()->id)
-                                          ->count('ID_NOTE');
+                                         ->count('ID_NOTE');
         
         if ($num_teammate == $num_notation) {
             $list_notation = DB::table('note')->join('users', 'users.id', 'note.ID_NOTE')
@@ -47,6 +47,50 @@ class NotationController extends Controller
             );
         }
 
+        function note_final () {
+            $read_table_users = DB::table('users')->where('id_equipe', '!=', 0)
+                                              ->get();
+            foreach ($read_table_users as $read_table_user) {
+                $num_teammate = DB::table('users')->where('id_equipe', $read_table_user->id_equipe)
+                                                ->where('id', '!=', $read_table_user->id)
+                                                ->count('id');
+                $num_note = DB::table('note')->where('ID_NOTE', $read_table_user->id)
+                                            ->count('ID_NOTANT');
+                $request = DB::table('note_final')->where('ID_NOTE', $read_table_user->id)
+                                                ->count();
+                
+                if ($num_teammate == $num_note && $request == 0) {
+                    $participation = DB::table('note')->where('ID_NOTE', $read_table_user->id)
+                                                    ->sum('PARTICIPATION');
+                    $participation /= $num_teammate;
+                    $engagement = DB::table('note')->where('ID_NOTE', $read_table_user->id)
+                                                ->sum('ENGAGEMENT');
+                    $engagement /= $num_teammate;
+                    $travail_en_equipe = DB::table('note')->where('ID_NOTE', $read_table_user->id)
+                                                        ->sum('TRAVAIL_EN_EQUIPE');
+                    $travail_en_equipe /= $num_teammate;
+                    $expertise = DB::table('note')->where('ID_NOTE', $read_table_user->id)
+                                                ->sum('EXPERTISE');
+                    $expertise /= $num_teammate;
+                    
+                    DB::table('note_final')->insert([
+                        'ID_NOTE' => $read_table_user->id,
+                        'PARTICIPATION' => round($participation, 2),
+                        'ENGAGEMENT' => round($engagement, 2),
+                        'TRAVAIL_EN_EQUIPE' => round($travail_en_equipe, 2),
+                        'EXPERTISE' => round($expertise, 2),
+                        'SUM' => $participation + $engagement + $travail_en_equipe + $expertise,
+                    ]);
+                }
+            }
+        }
+
+        note_final();
+
         return redirect(route('showNotationPage'));
+    }
+
+    public function test() {
+        
     }
 }

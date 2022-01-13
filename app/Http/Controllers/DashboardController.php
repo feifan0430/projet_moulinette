@@ -11,8 +11,8 @@ class DashboardController extends Controller
         $num_users = DB::table('users')->where('email', '!=', 'admin@imt-nord-europe.fr')->count('email');
         $read_table_users = DB::table('users')->where('email', '!=', 'admin@imt-nord-europe.fr')->get();
         // dd($read_table_users);
-        $num_note = DB::table('note')->count('ID_NOTANT');
-        $read_table_note = DB::select('select * from note');
+        $num_note = DB::table('note_final')->count('ID_NOTE');
+        $read_table_note = DB::table('note_final')->join('users', 'users.id', 'note_final.ID_NOTE')->get();
         $num_equipe = DB::table('equipe')->count('ID');
         $read_table_equipe = DB::select('select * from equipe');
 

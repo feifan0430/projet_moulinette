@@ -12,7 +12,7 @@
                     <table class="table table-striped">
                         <caption style="caption-side:top">
                             <h3>
-                                users
+                                Users
                             </h3>
                             <a class="btn btn-outline-info" role="button" href="{{route('export_users')}}" style="width: 50%">
                                 Export des users enregistrées au format csv
@@ -81,10 +81,16 @@
                         </caption>
                         <tr>
                             <th>
-                                ID_NOTANT
+                                ID
                             </th>
                             <th>
-                                ID_NOTE
+                                NOM
+                            </th>
+                            <th>
+                                PRENOM
+                            </th>
+                            <th>
+                                ID_EQUIPE
                             </th>
                             <th>
                                 PARTICIPATION
@@ -98,14 +104,23 @@
                             <th>
                                 EXPERTISE
                             </th>
+                            <th>
+                                SUM
+                            </th>
                         </tr>
                         @for($i = 0; $i < $num_note; $i++)
                         <tr>
                             <td>
-                                {{$read_table_note[$i]->ID_NOTANT}}
+                                {{$read_table_note[$i]->ID_NOTE}}
                             </td>
                             <td>
-                                {{$read_table_note[$i]->ID_NOTE}}
+                                {{$read_table_note[$i]->nom}}
+                            </td>
+                            <td>
+                                {{$read_table_note[$i]->prenom}}
+                            </td>
+                            <td>
+                                {{$read_table_note[$i]->id_equipe}}
                             </td>
                             <td>
                                 {{$read_table_note[$i]->PARTICIPATION}}
@@ -118,6 +133,9 @@
                             </td>
                             <td>
                                 {{$read_table_note[$i]->EXPERTISE}}
+                            </td>
+                            <td>
+                                {{$read_table_note[$i]->SUM}}
                             </td>
                         </tr>
                         @endfor
