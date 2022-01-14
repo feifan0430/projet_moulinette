@@ -30,14 +30,14 @@
                             </li>
                             @if (Route::has('login'))
                             @auth
-                            @if (Auth::user()->id_equipe != 0)
+                            @if (Auth::user()->permission != 'admin')
                             <li>
                                 <a href="{{ route('showNotationPage') }}" class="nav-link px-2 text-white">
                                     Notation
                                 </a>
                             </li> 
                             @endif   
-                            @if (Auth::user()->id_equipe == 0)
+                            @if (Auth::user()->permission == 'admin')
                             <li>
                                 <a href="{{ route('showUploadPage') }}" class="nav-link px-2 text-white">
                                     Upload
