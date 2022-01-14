@@ -14,12 +14,12 @@ class CreateNoteTable extends Migration
     public function up()
     {
         Schema::create('note', function (Blueprint $table) {
-            $table->integer('ID_NOTANT', 11);
-            $table->integer('ID_NOTE', 11);
-            $table->integer('PARTICIPATION', 11);
-            $table->integer('ENGAGEMENT', 11);
-            $table->integer('TRAVAIL_EN_EQUIPE', 11);
-            $table->integer('EXPERTISE', 11);
+            $table->integer('ID_NOTANT');
+            $table->integer('ID_NOTE');
+            $table->integer('PARTICIPATION');
+            $table->integer('ENGAGEMENT');
+            $table->integer('TRAVAIL_EN_EQUIPE');
+            $table->integer('EXPERTISE');
             $table->primary(['ID_NOTANT', 'ID_NOTE']);
         });
     }

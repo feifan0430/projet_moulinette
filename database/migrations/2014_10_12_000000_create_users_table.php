@@ -18,11 +18,11 @@ class CreateUsersTable extends Migration
             $table->string('nom', 30);
             $table->string('prenom', 30);
             $table->string('email', 50)->unique();
-            $table->integer('id_equipe');
-            $table->string('has_voted', 10);
+            $table->integer('id_equipe')->nullable();
+            $table->string('has_voted', 10)->nullable();
             $table->string('password');
-            $table->string('initial_password');
-            $table->string('permission', 20);
+            $table->string('initial_password')->nullable();
+            $table->string('permission', 20)->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();

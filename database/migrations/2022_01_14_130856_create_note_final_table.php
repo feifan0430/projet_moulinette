@@ -14,12 +14,12 @@ class CreateNoteFinalTable extends Migration
     public function up()
     {
         Schema::create('note_final', function (Blueprint $table) {
-            $table->integer('ID_NOTE', 11);
-            $table->float('PARTICIPATION', 5);
-            $table->float('ENGAGEMENT', 5);
-            $table->float('TRAVAIL_EN_EQUIPE', 5);
-            $table->float('EXPERTISE', 5);
-            $table->float('SUM', 5);
+            $table->integer('ID_NOTE');
+            $table->float('PARTICIPATION');
+            $table->float('ENGAGEMENT');
+            $table->float('TRAVAIL_EN_EQUIPE');
+            $table->float('EXPERTISE');
+            $table->float('SUM');
         });
     }
 
