@@ -66,7 +66,8 @@ class UploadController extends Controller
                     'nom' => $array['nom'],
                     'prenom' => $array['prenom'],
                     'email' => $array['email'],
-                    'password' => bcrypt($array['nom'])
+                    'password' => bcrypt($array['nom']),
+                    'initial_password' => Crypt::encryptString($array['nom'])
                 ]);
             }
         } else {
