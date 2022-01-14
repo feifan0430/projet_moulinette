@@ -141,7 +141,7 @@
                         @endfor
                     </table>
                 </div>
-                <div class="row" style="margin-bottom : 2%">
+                {{-- <div class="row" style="margin-bottom : 2%">
                     <table class="table table-striped">
                         <caption style="caption-side:top">
                             <h3>
@@ -170,7 +170,7 @@
                         </tr>
                         @endfor
                     </table>
-                </div>
+                </div> --}}
             </div>
         </div>
 @endsection
