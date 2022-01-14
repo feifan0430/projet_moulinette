@@ -49,15 +49,15 @@ class UserPasswordController extends Controller
     }
 
     public function test () {
-        // DB::table('users')->where('email', 'admin@imt-nord-europe.fr')
-        //                   ->update([
-        //                       'password' => bcrypt('admin'),
-        //                   ]);
+        $read_password = DB::table('users')->where('email', 'cpotin@mail.com')
+                          ->get('initial_password');
+        $password = $read_password[0]->initial_password;        
 
-        $word = "good";
-        $test = Crypt::encryptString($word);
-        echo $test . "</br>";
-        $test = Crypt::decryptString($test);
-        echo $test . "</br>";
+        // $word = "good";
+        // $test = Crypt::encryptString($word);
+        // echo $test . "</br>";
+        // $test = Crypt::decryptString($test);
+        // echo $test . "</br>";
+        echo Crypt::decryptString($password);
     }
 }

@@ -27,11 +27,19 @@ Route::get('/export/note', '\App\Http\Controllers\ExportController@exportDatabas
 Route::get('/export/utilisateur', '\App\Http\Controllers\ExportController@exportDatabase_users')->name('export_users'); // table utilisateur
 
 // Route dashboard
-Route::get('/dashboard', 'App\Http\Controllers\DashboardController@showDashboard')->name('showDashboard'); // page dashboard
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/dashboard', 'App\Http\Controllers\DashboardController@showDashboard')->name('showDashboard');
+});
+// Route::get('/dashboard', 'App\Http\Controllers\DashboardController@showDashboard')->name('showDashboard');
+ // page dashboard
 
 // Route upload
-Route::get('/upload', 'App\Http\Controllers\UploadController@showUploadPage')->name('showUploadPage');
-Route::post('/upload/read_csv', 'App\Http\Controllers\UploadController@read_csv')->name('read_csv');
+Route::group(['middleware' => ['auth', 'checkPermission']], function() {
+    Route::get('/upload', 'App\Http\Controllers\UploadController@showUploadPage')->name('showUploadPage');
+    Route::post('/upload/read_csv', 'App\Http\Controllers\UploadController@read_csv')->name('read_csv');
+});
+// Route::get('/upload', 'App\Http\Controllers\UploadController@showUploadPage')->name('showUploadPage');
+// Route::post('/upload/read_csv', 'App\Http\Controllers\UploadController@read_csv')->name('read_csv');
 
 // Route index
 Route::get('/index', function() {
