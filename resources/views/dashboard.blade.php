@@ -39,32 +39,34 @@
                             </th>
                         </tr>
                         @for($i = 0; $i < $num_users; $i++)
-                        <tr>
-                            <td>
-                                {{$read_table_users[$i]->id}}
-                            </td>
-                            <td>
-                                {{$read_table_users[$i]->id_equipe}}
-                            </td>
-                            <td>
-                                {{$read_table_users[$i]->nom}}
-                            </td>
-                            <td>
-                                {{$read_table_users[$i]->prenom}}
-                            </td>
-                            <td>
-                                {{$read_table_users[$i]->email}}
-                            </td>
-                            @if($read_table_users[$i]->has_voted == 'true')
-                            <td>
-                                <button type="button" class="btn btn-success" style="width: 100%">OUI</button>
-                            </td>
-                            @else
-                            <td>
-                                <button type="button" class="btn btn-danger" style="width: 100%">NON</button>
-                            </td>
-                            @endif
-                        </tr>
+                        @if ($read_table_users[$i]->permission == 'etudiant')
+                            <tr>
+                                <td>
+                                    {{$read_table_users[$i]->id}}
+                                </td>
+                                <td>
+                                    {{$read_table_users[$i]->id_equipe}}
+                                </td>
+                                <td>
+                                    {{$read_table_users[$i]->nom}}
+                                </td>
+                                <td>
+                                    {{$read_table_users[$i]->prenom}}
+                                </td>
+                                <td>
+                                    {{$read_table_users[$i]->email}}
+                                </td>
+                                @if($read_table_users[$i]->has_voted == 'true')
+                                <td>
+                                    <button type="button" class="btn btn-success" style="width: 100%">OUI</button>
+                                </td>
+                                @else
+                                <td>
+                                    <button type="button" class="btn btn-danger" style="width: 100%">NON</button>
+                                </td>
+                                @endif
+                            </tr>
+                        @endif
                         @endfor
                     </table>
                 </div>

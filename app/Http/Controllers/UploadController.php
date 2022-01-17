@@ -11,7 +11,7 @@ use function PHPSTORM_META\type;
 class UploadController extends Controller
 {
     public function showUploadPage() {
-        return view('upload');
+        return view('upload')->with('isUploaded', 'pas_encore');
     }
 
     public function read_csv() {
@@ -19,11 +19,17 @@ class UploadController extends Controller
         $file_name = $file['tmp_name'];
 
         if($file_name == '') {
-            die("Please choose a document. ");
+            // die("Please choose a document. ");
+            return view('upload')->with('isUploaded', 'false');
+            // return redirect(route('showUploadPage', array('isUploaded' => 'false')));
         }
 
         $handle = fopen($file_name, 'r');
-        if($handle === FALSE) die("Open Error");
+        if($handle === FALSE) {
+            // die("Open Error");
+            // return redirect(route('showUploadPage'))->with('isUploaded', 'false');
+            return view('upload')->with('isUploaded', 'false');
+        };
 
         $csv_val = array('nom', 'prenom', 'email', 'id_equipe');
         $csv_arr = array();
@@ -46,6 +52,15 @@ class UploadController extends Controller
             echo "key: " . $key . " value: " . $value . "<br>";
         }
         // echo $legal_input;
+        function generateRandomString($length = 10) {
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
+            return $randomString;
+        }
 
         if($legal_input == 'true') {
             while(($data = fgetcsv($handle)) !== FALSE) {
@@ -59,21 +74,22 @@ class UploadController extends Controller
             fclose($handle);
             // dd($csv_arr);
             foreach ($csv_arr as $key => $array) {
+                $initial_password = generateRandomString();
                 DB::table('users')->insert([
-                    // 'ID' => $array['ID'],
-                    // 'NOM' => $array['NOM']
                     'id_equipe' => $array['id_equipe'],
                     'nom' => $array['nom'],
                     'prenom' => $array['prenom'],
                     'email' => $array['email'],
-                    'password' => bcrypt($array['nom']),
-                    'initial_password' => Crypt::encryptString($array['nom'])
+                    'password' => bcrypt($initial_password),
+                    'initial_password' => Crypt::encryptString($initial_password),
+                    'permission' => 'etudiant'
                 ]);
             }
         } else {
-            echo "error";
+            // return redirect(route('showUploadPage'))->with('isUploaded', 'false');
+            return view('upload')->with('isUploaded', 'false');
         }
-        return redirect(route('showUploadPage'));
+        return redirect(route('showUploadPage'))->with('isUploaded', 'true');
     }
 
     

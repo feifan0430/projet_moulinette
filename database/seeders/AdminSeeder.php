@@ -31,5 +31,12 @@ class AdminSeeder extends Seeder
             'password' => bcrypt('feifan'),
             'permission' => 'admin'
         ]);
+        DB::table('users')->insert([
+            'nom' => 'GAO',
+            'prenom' => 'Jiaqi',
+            'email' => 'jiaqi.gao@imt-nord-europe.fr',
+            'password' => bcrypt('gaojiaqi'),
+            'permission' => 'admin'
+        ]);
     }
 }

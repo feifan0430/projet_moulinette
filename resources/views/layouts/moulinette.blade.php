@@ -30,7 +30,7 @@
                             </li>
                             @if (Route::has('login'))
                             @auth
-                            @if (Auth::user()->permission != 'admin')
+                            @if (Auth::user()->permission == 'etudiant')
                             <li>
                                 <a href="{{ route('showNotationPage') }}" class="nav-link px-2 text-white">
                                     Notation
@@ -41,6 +41,11 @@
                             <li>
                                 <a href="{{ route('showUploadPage') }}" class="nav-link px-2 text-white">
                                     Upload
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('showMailPage') }}" class="nav-link px-2 text-white">
+                                    Send Mail
                                 </a>
                             </li>
                             <li>
