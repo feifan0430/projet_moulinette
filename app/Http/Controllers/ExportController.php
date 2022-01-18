@@ -47,11 +47,11 @@ class ExportController extends Controller
         header('Content-type: text/csv; charset=UTF-8');
         header('Content-Disposition: attachment; filename=note.csv');
         print(chr(0xEF).chr(0xBB).chr(0xBF));
-        fputcsv($fp, ['ID', 'NOM', 'PRENOM', 'ID_EQUIPE', 'PARTICIPATION', 'ENGAGEMENT', 'TRAVAIL_EN_EQUIPE', 'EXPERTISE', 'NOTE_FINALE'], ",");
+        fputcsv($fp, ['NOM', 'PRENOM', 'ID_EQUIPE', 'PARTICIPATION', 'ENGAGEMENT', 'TRAVAIL_EN_EQUIPE', 'EXPERTISE', 'NOTE_FINALE'], ",");
         // $result = DB::select("select * from note");
         $result = DB::table('note_final')->join('users', 'users.id', 'note_final.ID_NOTE')->orderBy('id_equipe')->get();
         foreach ($result as $key => $value) { 
-            $id_note = $value->ID_NOTE;
+            // $id_note = $value->ID_NOTE;
             $nom = $value->nom;
             $prenom = $value->prenom;
             $id_equipe = $value->id_equipe;
@@ -60,7 +60,7 @@ class ExportController extends Controller
             $travail_en_equipe = $value->TRAVAIL_EN_EQUIPE;
             $expertise = $value->EXPERTISE;
             $sum = $value->SUM;
-            $str = $id_note . "," . $nom . "," . $prenom . "," . $id_equipe . "," . $participation . "," . $engagement . "," . $travail_en_equipe . "," . $expertise . "," . $sum;
+            $str = $nom . "," . $prenom . "," . $id_equipe . "," . $participation . "," . $engagement . "," . $travail_en_equipe . "," . $expertise . "," . $sum;
             $str = explode(',', $str);
             fputcsv($fp, $str, ",");
         }
@@ -82,18 +82,18 @@ class ExportController extends Controller
         header('Content-type: text/csv; charset=UTF-8');
         header('Content-Disposition: attachment; filename=utilisateur.csv');
         print(chr(0xEF).chr(0xBB).chr(0xBF));
-        fputcsv($fp, ['id', 'nom', 'prenom', 'email', 'id_equipe'], ",");
+        fputcsv($fp, ['nom', 'prenom', 'email', 'id_equipe'], ",");
         $result = DB::table('users')->orderBy('id_equipe')->get();
         foreach ($result as $key => $value) {
             if ($value->permission != 'etudiant') {
                 continue;
             }
-            $id = $value->id; 
+            // $id = $value->id; 
             $id_equipe = $value->id_equipe;
             $nom = $value->nom;
             $prenom = $value->prenom;
             $email = $value->email;
-            $str = $id . "," . $nom . "," . $prenom . "," . $email . "," . $id_equipe;
+            $str = $nom . "," . $prenom . "," . $email . "," . $id_equipe;
             $str = explode(',', $str);
             fputcsv($fp, $str, ",");
         }

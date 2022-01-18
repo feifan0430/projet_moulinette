@@ -13,8 +13,8 @@ class DashboardController extends Controller
         // dd($read_table_users);
         $num_note = DB::table('note_final')->count('ID_NOTE');
         $read_table_note = DB::table('note_final')->join('users', 'users.id', 'note_final.ID_NOTE')->orderBy('id_equipe')->get();
-        $num_equipe = DB::table('equipe')->count('ID');
-        $read_table_equipe = DB::select('select * from equipe');
+        // $num_equipe = DB::table('equipe')->count('ID');
+        // $read_table_equipe = DB::select('select * from equipe');
 
         for($i = 0; $i < $num_users; $i++){
             $num_vote = DB::table('note')->where('ID_NOTANT', $read_table_users[$i]->id)
@@ -33,8 +33,8 @@ class DashboardController extends Controller
         return view('dashboard')->with('num_users', $num_users)
                                 ->with('read_table_users', $read_table_users)
                                 ->with('num_note', $num_note)
-                                ->with('read_table_note', $read_table_note)
-                                ->with('num_equipe', $num_equipe)
-                                ->with('read_table_equipe', $read_table_equipe);
+                                ->with('read_table_note', $read_table_note);
+                                // ->with('num_equipe', $num_equipe)
+                                // ->with('read_table_equipe', $read_table_equipe);
     }
 }

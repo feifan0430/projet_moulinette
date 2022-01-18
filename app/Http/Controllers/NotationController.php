@@ -48,8 +48,8 @@ class NotationController extends Controller
         }
 
         function note_final () {
-            $read_table_users = DB::table('users')->where('id_equipe', '!=', 0)
-                                              ->get();
+            $read_table_users = DB::table('users')->where('permission', 'etudiant')
+                                                  ->get();
             foreach ($read_table_users as $read_table_user) {
                 $num_teammate = DB::table('users')->where('id_equipe', $read_table_user->id_equipe)
                                                 ->where('id', '!=', $read_table_user->id)
