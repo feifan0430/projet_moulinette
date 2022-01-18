@@ -1,6 +1,6 @@
 @extends('layouts.moulinette')
 @section('content')
-<div class="container">
+<div class="container" style="margin-top: 2%">
     <form id="notationForm" action="{{ route('updateNotation') }}" method="post">
         {{ csrf_field() }}
     @foreach ($list_teammate as $teammate)
@@ -113,9 +113,12 @@
             </div>
         </div>
     @endforeach
-    <button type="submit" class="btn-outline" onclick="return checkRadio({{$list_teammate}})">Envoyer</button>
+    <button type="submit" class="btn" style="background-color: #00b8de; color: white" onclick="return checkRadio({{$list_teammate}})">
+        Enregistrer
+    </button>
 </form>
 </div>
+
 
 <script>
     function checkRadio(list_teammate) {

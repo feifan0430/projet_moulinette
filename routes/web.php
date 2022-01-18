@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth', 'checkPermission']], function() {
 Route::group(['middleware' => ['auth', 'checkPermission']], function() {
     Route::get('/upload', 'App\Http\Controllers\UploadController@showUploadPage')->name('showUploadPage');
     Route::post('/upload/read_csv', 'App\Http\Controllers\UploadController@read_csv')->name('read_csv');
+    Route::get('/upload/deleteUsers', 'App\Http\Controllers\UploadController@deleteUsers')->name('deleteUsers');
 });
 
 // Route notation
@@ -56,13 +57,11 @@ Route::group(['middleware' => ['auth']], function() {
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/reset_password_page', 'App\Http\Controllers\UserPasswordController@showUpdatePasswordPage')->name('showUpdatePasswordPage');
     Route::post('/reset_password', 'App\Http\Controllers\UserPasswordController@updatePassword')->name('updatePassword');
-    Route::get('/test', 'App\Http\Controllers\UserPasswordController@test')->name('test');
+    Route::get('/showpassword', 'App\Http\Controllers\UserPasswordController@test')->name('showpassword');
 });
 
 // Route mail
 Route::group(['middleware' => ['auth', 'checkPermission']], function() {
-    Route::get('mail', function () {
-        return view('mail');
-    })->name('showMailPage');
+    Route::get('mail', 'App\Http\Controllers\MailController@showMailPage')->name('showMailPage');
     Route::any('mail/send','App\Http\Controllers\MailController@sendEmail')->name('sendMail');
 });

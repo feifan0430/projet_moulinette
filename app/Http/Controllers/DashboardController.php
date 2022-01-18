@@ -9,10 +9,10 @@ class DashboardController extends Controller
 {
     public function showDashboard() {
         $num_users = DB::table('users')->where('email', '!=', 'admin@imt-nord-europe.fr')->count('email');
-        $read_table_users = DB::table('users')->where('email', '!=', 'admin@imt-nord-europe.fr')->get();
+        $read_table_users = DB::table('users')->orderBy('id_equipe')->where('email', '!=', 'admin@imt-nord-europe.fr')->get();
         // dd($read_table_users);
         $num_note = DB::table('note_final')->count('ID_NOTE');
-        $read_table_note = DB::table('note_final')->join('users', 'users.id', 'note_final.ID_NOTE')->get();
+        $read_table_note = DB::table('note_final')->join('users', 'users.id', 'note_final.ID_NOTE')->orderBy('id_equipe')->get();
         $num_equipe = DB::table('equipe')->count('ID');
         $read_table_equipe = DB::select('select * from equipe');
 

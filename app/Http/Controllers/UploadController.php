@@ -14,21 +14,24 @@ class UploadController extends Controller
         return view('upload')->with('isUploaded', 'pas_encore');
     }
 
+    public function deleteUsers() {
+        DB::table('users')->where('permission', 'etudiant')->delete();
+        return view('upload')->with('isUploaded', 'success_delete');
+    }
+
     public function read_csv() {
         $file = $_FILES['excel_path'];
         $file_name = $file['tmp_name'];
 
         if($file_name == '') {
             // die("Please choose a document. ");
-            return view('upload')->with('isUploaded', 'false');
-            // return redirect(route('showUploadPage', array('isUploaded' => 'false')));
+            return view('upload')->with('isUploaded', 'fail');
         }
 
         $handle = fopen($file_name, 'r');
         if($handle === FALSE) {
             // die("Open Error");
-            // return redirect(route('showUploadPage'))->with('isUploaded', 'false');
-            return view('upload')->with('isUploaded', 'false');
+            return view('upload')->with('isUploaded', 'fail');
         };
 
         $csv_val = array('nom', 'prenom', 'email', 'id_equipe');
@@ -47,9 +50,9 @@ class UploadController extends Controller
             if(strcmp($key, $value) != 0) {
                 $legal_input = 'false';
             }
-            echo (strcmp($key, $value)) . "<br>";
-            echo ($key) . "<br>";
-            echo "key: " . $key . " value: " . $value . "<br>";
+            // echo (strcmp($key, $value)) . "<br>";
+            // echo ($key) . "<br>";
+            // echo "key: " . $key . " value: " . $value . "<br>";
         }
         // echo $legal_input;
         function generateRandomString($length = 10) {
@@ -86,10 +89,9 @@ class UploadController extends Controller
                 ]);
             }
         } else {
-            // return redirect(route('showUploadPage'))->with('isUploaded', 'false');
-            return view('upload')->with('isUploaded', 'false');
+            return view('upload')->with('isUploaded', 'fail');
         }
-        return redirect(route('showUploadPage'))->with('isUploaded', 'true');
+        return view('upload')->with('isUploaded', 'success');
     }
 
     

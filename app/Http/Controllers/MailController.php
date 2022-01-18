@@ -10,17 +10,26 @@ use Illuminate\Support\Facades\DB;
 
 class MailController extends Controller
 {
+    public function showMailPage() {
+        return view('mail')->with('toShow', 'sendMailPage');
+    }
+
     public function sendEmail() {
-        $decrypted = bcrypt(Auth::user()->password);
-        // 纯文本信息邮件测试
-        Mail::raw($decrypted, function ($message) {
-            $to = 'jiaqi.gao@etu.imt-nord-europe.fr';
-            $message ->to($to)->subject('Password');
-        });
+        $num_etudiant = DB::table('users')->where('permission', 'etudiant')->count();
+        $read_list_etudiant = DB::table('users')->where('permission', 'etudiant')->get();
+        for ($i = 0; $i < $num_etudiant; $i++) {
+            $email = $read_list_etudiant[$i]->email;
+            $initial_password = Crypt::decryptString($read_list_etudiant[$i]->initial_password);
+            $content = 'Bonjour, votre mot de passe initial est ' . $initial_password . " .";
+            Mail::raw($content, function ($message) use ($email) { 
+                $to = $email;
+                $message->to($to)->subject('Password');
+            });
+        }
         if (count(Mail::failures()) < 1) {
-            echo '发送邮件成功，请查收！';
+            return view('mail')->with('toShow', 'success');
         } else {
-            echo '发送邮件失败，请重试！';
+            return view('mail')->with('toShow', 'fail');
         }
     }
 }

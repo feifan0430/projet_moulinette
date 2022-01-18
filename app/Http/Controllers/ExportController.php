@@ -47,9 +47,9 @@ class ExportController extends Controller
         header('Content-type: text/csv; charset=UTF-8');
         header('Content-Disposition: attachment; filename=note.csv');
         print(chr(0xEF).chr(0xBB).chr(0xBF));
-        fputcsv($fp, ['ID', 'NOM', 'PRENOM', 'ID_EQUIPE', 'PARTICIPATION', 'ENGAGEMENT', 'TRAVAIL_EN_EQUIPE', 'EXPERTISE', 'SUM'], ",");
+        fputcsv($fp, ['ID', 'NOM', 'PRENOM', 'ID_EQUIPE', 'PARTICIPATION', 'ENGAGEMENT', 'TRAVAIL_EN_EQUIPE', 'EXPERTISE', 'NOTE_FINALE'], ",");
         // $result = DB::select("select * from note");
-        $result = DB::table('note_final')->join('users', 'users.id', 'note_final.ID_NOTE')->get();
+        $result = DB::table('note_final')->join('users', 'users.id', 'note_final.ID_NOTE')->orderBy('id_equipe')->get();
         foreach ($result as $key => $value) { 
             $id_note = $value->ID_NOTE;
             $nom = $value->nom;
@@ -83,8 +83,11 @@ class ExportController extends Controller
         header('Content-Disposition: attachment; filename=utilisateur.csv');
         print(chr(0xEF).chr(0xBB).chr(0xBF));
         fputcsv($fp, ['id', 'nom', 'prenom', 'email', 'id_equipe'], ",");
-        $result = DB::select("select * from users");
+        $result = DB::table('users')->orderBy('id_equipe')->get();
         foreach ($result as $key => $value) {
+            if ($value->permission != 'etudiant') {
+                continue;
+            }
             $id = $value->id; 
             $id_equipe = $value->id_equipe;
             $nom = $value->nom;

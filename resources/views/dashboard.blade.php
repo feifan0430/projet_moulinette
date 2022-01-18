@@ -1,9 +1,9 @@
 @extends('layouts.moulinette')
 @section('content')
-        <div class="container">
+        <div class="container" style="margin-top: 2%">
             <div class="container">
                 <h2>
-                    Dashboard
+                    Tableau de bord
                 </h2>
             </div>
             <hr class="featurette-divider">
@@ -12,7 +12,7 @@
                     <table class="table table-striped">
                         <caption style="caption-side:top">
                             <h3>
-                                Users
+                                Etudiants
                             </h3>
                             <a class="btn btn-outline-info" role="button" href="{{route('export_users')}}" style="width: 50%">
                                 Export des users enregistrées au format csv
@@ -23,7 +23,7 @@
                                 ID
                             </th>
                             <th>
-                                ID_EQUIPE
+                                ID EQUIPE
                             </th>
                             <th>
                                 NOM
@@ -32,10 +32,10 @@
                                 PRENOM
                             </th>
                             <th>
-                                MAIL
+                                E-MAIL
                             </th>
                             <th>
-                                Voté
+                                VOTE
                             </th>
                         </tr>
                         @for($i = 0; $i < $num_users; $i++)
@@ -75,7 +75,7 @@
                     <table class="table table-striped">
                         <caption style="caption-side:top">
                             <h3>
-                                Note
+                                Note finale
                             </h3>
                             <a class="btn btn-outline-info" role="button" href="{{route('export_note')}}" style="width: 50%">
                                 Export des notes enregistrées au format csv
@@ -92,7 +92,7 @@
                                 PRENOM
                             </th>
                             <th>
-                                ID_EQUIPE
+                                ID EQUIPE
                             </th>
                             <th>
                                 PARTICIPATION
@@ -101,13 +101,13 @@
                                 ENGAGEMENT
                             </th>
                             <th>
-                                TRAVAIL_EN_EQUIPE
+                                TRAVAIL EN EQUIPE
                             </th>
                             <th>
                                 EXPERTISE
                             </th>
                             <th>
-                                SUM
+                                NOTE FINALE
                             </th>
                         </tr>
                         @for($i = 0; $i < $num_note; $i++)
@@ -173,6 +173,19 @@
                         @endfor
                     </table>
                 </div> --}}
+            </div>
+        </div>
+        <div class="footer">
+            <div class="container">
+                <hr class="featurette-divider">
+                <p class="pull-right">
+                    <a href="#">
+                        Back to top
+                    </a>
+                </p>
+                <p>
+                    &copy; 2021 &middot; IMT Nord Europe
+                </p>
             </div>
         </div>
 @endsection

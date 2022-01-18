@@ -1,6 +1,6 @@
 @extends('layouts.moulinette')
 @section('content')
-    <div class="container">
+    <div class="container" style="margin-top: 2%">
         <div class="row" style="margin-bottom : 2%">
             <table class="table table-striped">
                 <caption style="caption-side:top">
@@ -22,7 +22,7 @@
                         ENGAGEMENT
                     </th>
                     <th>
-                        TRAVAIL_EN_EQUIPE
+                        TRAVAIL EN EQUIPE
                     </th>
                     <th>
                         EXPERTISE

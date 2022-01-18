@@ -49,7 +49,7 @@ class UserPasswordController extends Controller
     }
 
     public function test () {
-        $read_password = DB::table('users')->where('email', 'cpotin@mail.com')
+        $read_password = DB::table('users')->where('email', 'epetrinadin@mail.com')
                           ->get('initial_password');
         $password = $read_password[0]->initial_password;        
 
