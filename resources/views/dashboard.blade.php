@@ -35,6 +35,9 @@
                                 E-MAIL
                             </th>
                             <th>
+                                NOTE ACTUELLE
+                            </th>
+                            <th>
                                 VOTE
                             </th>
                         </tr>
@@ -56,13 +59,22 @@
                                 <td>
                                     {{$read_table_users[$i]->email}}
                                 </td>
+                                <td>
+                                    <form action="{{ route('showNoteActuelle') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="user_id" value="{{ $read_table_users[$i]->id }}">
+                                        <button type="submit" class="btn" style="width: 80%; background-color: #00b8de; color: white">
+                                            Montre maintenant
+                                        </button>
+                                    </form>
+                                </td>
                                 @if($read_table_users[$i]->has_voted == 'true')
                                 <td>
-                                    <button type="button" class="btn btn-success" style="width: 100%">OUI</button>
+                                    <button class="btn btn-success" style="width: 90%">OUI</button>
                                 </td>
                                 @else
                                 <td>
-                                    <button type="button" class="btn btn-danger" style="width: 100%">NON</button>
+                                    <button class="btn btn-danger" style="width: 90%">NON</button>
                                 </td>
                                 @endif
                             </tr>

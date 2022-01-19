@@ -50,6 +50,7 @@ Route::group(['middleware' => ['auth', 'checkPermission']], function() {
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/notation', 'App\Http\Controllers\NotationController@showNotationPage')->name('showNotationPage');
     Route::post('/updateNotation', 'App\Http\Controllers\NotationController@updateNotation')->name('updateNotation');
+    Route::post('/showNoteActuelle', 'App\Http\Controllers\NotationController@showNoteActuelle')->name('showNoteActuelle');
     // Route::get('/test', 'App\Http\Controllers\NotationController@test')->name('test');
 });
 

@@ -3,7 +3,7 @@
     @if ($isUploaded == 'success')
         <div class="container" style="margin-top: 5%">
             <h3>
-                Uploaded Successfully.
+                Ajouté avec succès.
             </h3>
             <div class="row" style="margin-top: 2%">
                 <form action="{{ route('showDashboard') }}" method="get">
@@ -20,7 +20,7 @@
         <div class="container" style="margin-top: 5%">
             <div class="row">
                 <h3>
-                    Uploaded Failed Please Retry.
+                    Échec de l'ajout, veuillez réessayer.
                 </h3>
             </div>
             <div class="row" style="margin-top: 2%">
