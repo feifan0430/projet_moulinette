@@ -14,10 +14,12 @@ class UploadController extends Controller
         return view('upload')->with('isUploaded', 'pas_encore');
     }
 
-    public function deleteUsers() {
-        DB::table('users')->where('permission', 'etudiant')->delete();
-        return view('upload')->with('isUploaded', 'success_delete');
-    }
+    // public function deleteUsers() {
+    //     DB::table('users')->where('permission', 'etudiant')->delete();
+    //     DB::table('note')->delete();
+    //     DB::table('note_final')->delete();
+    //     return view('upload')->with('isUploaded', 'success_delete');
+    // }
 
     public function read_csv() {
         $file = $_FILES['excel_path'];

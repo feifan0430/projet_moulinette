@@ -59,7 +59,7 @@
             </form>
         </div>
 
-        <div class="container" style="margin-top: 5%">
+        {{-- <div class="container" style="margin-top: 5%">
             <div class="row">
                 <h3>
                     Supprimer toutes les informations sur l'étudiant:
@@ -73,7 +73,7 @@
                     </button>
                 </form>
             </div>
-        </div>
+        </div> --}}
     @endif
 
     @if ($isUploaded == 'success_delete')

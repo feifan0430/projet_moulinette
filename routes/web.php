@@ -43,7 +43,7 @@ Route::group(['middleware' => ['auth', 'checkPermission']], function() {
 Route::group(['middleware' => ['auth', 'checkPermission']], function() {
     Route::get('/upload', 'App\Http\Controllers\UploadController@showUploadPage')->name('showUploadPage');
     Route::post('/upload/read_csv', 'App\Http\Controllers\UploadController@read_csv')->name('read_csv');
-    Route::get('/upload/deleteUsers', 'App\Http\Controllers\UploadController@deleteUsers')->name('deleteUsers');
+    // Route::get('/upload/deleteUsers', 'App\Http\Controllers\UploadController@deleteUsers')->name('deleteUsers');
 });
 
 // Route notation
