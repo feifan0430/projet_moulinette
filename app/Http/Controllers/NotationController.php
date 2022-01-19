@@ -96,17 +96,13 @@ class NotationController extends Controller
             // DB::table('note_final')->update([]);
             $num_note = DB::table('note')->where('ID_NOTE', $user_id)->count();
 
-            $participation = DB::table('note')->where('ID_NOTE', $user_id)
-                                                      ->sum('PARTICIPATION');
+            $participation = DB::table('note')->where('ID_NOTE', $user_id)->sum('PARTICIPATION');
             $participation /= $num_note;
-            $engagement = DB::table('note')->where('ID_NOTE', $user_id)
-                                                   ->sum('ENGAGEMENT');
+            $engagement = DB::table('note')->where('ID_NOTE', $user_id)->sum('ENGAGEMENT');
             $engagement /= $num_note;
-            $travail_en_equipe = DB::table('note')->where('ID_NOTE', $user_id)
-                                                          ->sum('TRAVAIL_EN_EQUIPE');
+            $travail_en_equipe = DB::table('note')->where('ID_NOTE', $user_id)->sum('TRAVAIL_EN_EQUIPE');
             $travail_en_equipe /= $num_note;
-            $expertise = DB::table('note')->where('ID_NOTE', $user_id)
-                                                  ->sum('EXPERTISE');
+            $expertise = DB::table('note')->where('ID_NOTE', $user_id)->sum('EXPERTISE');
             $expertise /= $num_note;
             DB::table('note_final')->where('ID_NOTE', $user_id)->update([
                 // 'ID_NOTE' => $user_id,
@@ -118,33 +114,35 @@ class NotationController extends Controller
             ]);
         }
         else{
-            $id_equipe = DB::table('users')->where('id', $user_id)->get('id_equipe');
-            $id_equipe = $id_equipe[0]->id_equipe;
             $num_note = DB::table('note')->where('ID_NOTE', $user_id)->count();
-            // echo $id_equipe;
-            // $num_teammate = DB::table('users')->where('id_equipe', $id_equipe)
-            //                                       ->where('id', '!=', $user_id)
-            //                                       ->count();
-            $participation = DB::table('note')->where('ID_NOTE', $user_id)
-                                                      ->sum('PARTICIPATION');
-            $participation /= $num_note;
-            $engagement = DB::table('note')->where('ID_NOTE', $user_id)
-                                                   ->sum('ENGAGEMENT');
-            $engagement /= $num_note;
-            $travail_en_equipe = DB::table('note')->where('ID_NOTE', $user_id)
-                                                          ->sum('TRAVAIL_EN_EQUIPE');
-            $travail_en_equipe /= $num_note;
-            $expertise = DB::table('note')->where('ID_NOTE', $user_id)
-                                                  ->sum('EXPERTISE');
-            $expertise /= $num_note;
-            DB::table('note_final')->insert([
-                'ID_NOTE' => $user_id,
-                'PARTICIPATION' => round($participation, 2),
-                'ENGAGEMENT' => round($engagement, 2),
-                'TRAVAIL_EN_EQUIPE' => round($travail_en_equipe, 2),
-                'EXPERTISE' => round($expertise, 2),
-                'SUM' => $participation + $engagement + $travail_en_equipe + $expertise,
-            ]);
+            if ($num_note == 0) {
+                DB::table('note_final')->insert([
+                    'ID_NOTE' => $user_id,
+                    'PARTICIPATION' => 0,
+                    'ENGAGEMENT' => 0,
+                    'TRAVAIL_EN_EQUIPE' => 0,
+                    'EXPERTISE' => 0,
+                    'SUM' => 0,
+                ]);
+            }else {
+                $participation = DB::table('note')->where('ID_NOTE', $user_id)->sum('PARTICIPATION');
+                $participation /= $num_note;
+                $engagement = DB::table('note')->where('ID_NOTE', $user_id)->sum('ENGAGEMENT');
+                $engagement /= $num_note;
+                $travail_en_equipe = DB::table('note')->where('ID_NOTE', $user_id)->sum('TRAVAIL_EN_EQUIPE');
+                $travail_en_equipe /= $num_note;
+                $expertise = DB::table('note')->where('ID_NOTE', $user_id)->sum('EXPERTISE');
+                $expertise /= $num_note;
+                DB::table('note_final')->insert([
+                    'ID_NOTE' => $user_id,
+                    'PARTICIPATION' => round($participation, 2),
+                    'ENGAGEMENT' => round($engagement, 2),
+                    'TRAVAIL_EN_EQUIPE' => round($travail_en_equipe, 2),
+                    'EXPERTISE' => round($expertise, 2),
+                    'SUM' => $participation + $engagement + $travail_en_equipe + $expertise,
+                ]);
+            }
+            
         }
         return redirect(route('showDashboard'));
     }
