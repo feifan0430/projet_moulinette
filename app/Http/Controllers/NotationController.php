@@ -62,16 +62,16 @@ class NotationController extends Controller
                 if ($num_teammate == $num_note && $request == 0) {
                     $participation = DB::table('note')->where('ID_NOTE', $read_table_user->id)
                                                       ->sum('PARTICIPATION');
-                    $participation /= $num_teammate;
+                    $participation /= $num_note;
                     $engagement = DB::table('note')->where('ID_NOTE', $read_table_user->id)
                                                    ->sum('ENGAGEMENT');
-                    $engagement /= $num_teammate;
+                    $engagement /= $num_note;
                     $travail_en_equipe = DB::table('note')->where('ID_NOTE', $read_table_user->id)
                                                           ->sum('TRAVAIL_EN_EQUIPE');
-                    $travail_en_equipe /= $num_teammate;
+                    $travail_en_equipe /= $num_note;
                     $expertise = DB::table('note')->where('ID_NOTE', $read_table_user->id)
                                                   ->sum('EXPERTISE');
-                    $expertise /= $num_teammate;
+                    $expertise /= $num_note;
                     
                     DB::table('note_final')->insert([
                         'ID_NOTE' => $read_table_user->id,
