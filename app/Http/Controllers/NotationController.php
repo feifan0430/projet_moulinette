@@ -81,6 +81,27 @@ class NotationController extends Controller
                         'EXPERTISE' => round($expertise, 2),
                         'SUM' => $participation + $engagement + $travail_en_equipe + $expertise,
                     ]);
+                }else {
+                    $participation = DB::table('note')->where('ID_NOTE', $read_table_user->id)
+                                                      ->sum('PARTICIPATION');
+                    $participation /= $num_teammate;
+                    $engagement = DB::table('note')->where('ID_NOTE', $read_table_user->id)
+                                                   ->sum('ENGAGEMENT');
+                    $engagement /= $num_teammate;
+                    $travail_en_equipe = DB::table('note')->where('ID_NOTE', $read_table_user->id)
+                                                          ->sum('TRAVAIL_EN_EQUIPE');
+                    $travail_en_equipe /= $num_teammate;
+                    $expertise = DB::table('note')->where('ID_NOTE', $read_table_user->id)
+                                                  ->sum('EXPERTISE');
+                    $expertise /= $num_teammate;
+                    
+                    DB::table('note_final')->where('ID_NOTE', $read_table_user->id)->update([
+                        'PARTICIPATION' => round($participation, 2),
+                        'ENGAGEMENT' => round($engagement, 2),
+                        'TRAVAIL_EN_EQUIPE' => round($travail_en_equipe, 2),
+                        'EXPERTISE' => round($expertise, 2),
+                        'SUM' => $participation + $engagement + $travail_en_equipe + $expertise,
+                    ]);
                 }
             }
         }
@@ -95,7 +116,9 @@ class NotationController extends Controller
         if (DB::table('note_final')->where('ID_NOTE', $user_id)->first()) {
             // DB::table('note_final')->update([]);
             $num_note = DB::table('note')->where('ID_NOTE', $user_id)->count();
-
+            if ($num_note == 0) {
+                return redirect(route('showDashboard'));
+            }
             $participation = DB::table('note')->where('ID_NOTE', $user_id)->sum('PARTICIPATION');
             $participation /= $num_note;
             $engagement = DB::table('note')->where('ID_NOTE', $user_id)->sum('ENGAGEMENT');
